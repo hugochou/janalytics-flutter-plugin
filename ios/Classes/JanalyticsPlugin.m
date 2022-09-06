@@ -1,4 +1,5 @@
 #import "JanalyticsPlugin.h"
+#import <JCore/JGInforCollectionAuth.h>>
 
 @interface NSError (FlutterError)
 @property(readonly, nonatomic) FlutterError *flutterError;
@@ -62,6 +63,13 @@
 
 - (void) setup:(FlutterMethodCall*)call result:(FlutterResult)reslut{
     NSDictionary *arguments = call.arguments;
+    
+    // 隐私合规处理
+    NSNumber *isAuth = arguments[@"isAuth"];
+    [JGInforCollectionAuth JCollectionAuth:^(JGInforCollectionAuthItems * _Nonnull authInfo)     {
+        authInfo.isAuth = [isAuth boolValue];
+    }];
+    
     NSString *appKey = arguments[@"appKey"];
     NSString *channel = arguments[@"channel"];
     JANALYTICSLaunchConfig *config = [[JANALYTICSLaunchConfig alloc] init];

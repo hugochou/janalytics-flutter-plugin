@@ -40,6 +40,6 @@ android {
 }
 dependencies {
     implementation 'cn.jiguang.sdk:janalytics:2.1.2'
-    implementation 'cn.jiguang.sdk:jcore:2.6.0'
+    implementation 'cn.jiguang.sdk:jcore:3.3.2'
     compileOnly files('libs/flutter.jar')
 }

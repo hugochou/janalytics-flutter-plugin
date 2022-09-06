@@ -26,8 +26,8 @@ class Janalytics {
 //    return version;
 //  }
 
-  void setup({String appKey,String channel}) {
-    _channel.invokeMethod("setup",{"appKey":appKey,"channel":channel});
+  void setup({String appKey,String channel, bool isAuth = false}) {
+    _channel.invokeMethod("setup",{"appKey":appKey,"channel":channel, "isAuth": isAuth});
   }
 
   void setDebugMode(bool debug){
