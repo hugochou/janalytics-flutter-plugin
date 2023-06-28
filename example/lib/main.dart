@@ -1,12 +1,14 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:package_info/package_info.dart';
-import 'viewpage.dart';
-import 'demo_utils.dart';
+
+import 'package:flutter/material.dart';
 import 'package:janalyticsplub/janalyticsplub.dart';
-import 'show_hide_page.dart';
-import 'replace_page.dart';
+import 'package:package_info/package_info.dart';
+
 import 'account_page.dart';
+import 'demo_utils.dart';
+import 'replace_page.dart';
+import 'show_hide_page.dart';
+import 'viewpage.dart';
 
 void main() => runApp(MyApp());
 
@@ -28,8 +30,7 @@ class HomeActivity extends StatefulWidget {
   }
 }
 
-class HomeActivityState extends State<HomeActivity>
-    with WidgetsBindingObserver {
+class HomeActivityState extends State<HomeActivity> with WidgetsBindingObserver {
   String debugLabel = 'Unknown';
   final Janalytics janalytics = new Janalytics();
   @override
@@ -48,9 +49,7 @@ class HomeActivityState extends State<HomeActivity>
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    janalytics.setup(
-        appKey: "e58a32cb3e4469ebf31867e5",
-        channel: "devloper-default"); // 初始化sdk
+    janalytics.setup(appKey: "e58a32cb3e4469ebf31867e5", channel: "devloper-default", isAuth: true); // 初始化sdk
     janalytics.setDebugMode(true); // 打开调试模式
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
@@ -62,8 +61,7 @@ class HomeActivityState extends State<HomeActivity>
 
     try {
       PackageInfo info = await PackageInfo.fromPlatform();
-      String appInfo =
-          '应用名: ${info.appName}\n包名:${info.packageName}\n版本:${info.version}';
+      String appInfo = '应用名: ${info.appName}\n包名:${info.packageName}\n版本:${info.version}';
       setState(() {
         debugLabel = appInfo;
       });

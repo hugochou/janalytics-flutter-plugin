@@ -11,11 +11,10 @@ class Janalytics {
   @visibleForTesting
   Janalytics.private(MethodChannel channel) : _channel = channel;
 
-  static final Janalytics _instance =
-      new Janalytics.private(const MethodChannel('janalyticsplub'));
+  static final Janalytics _instance = new Janalytics.private(const MethodChannel('janalyticsplub'));
 
-  void setup({String? appKey, String? channel}) {
-    _channel.invokeMethod("setup", {"appKey": appKey, "channel": channel});
+  void setup({String? appKey, String? channel, bool? isAuth = false}) {
+    _channel.invokeMethod("setup", {"appKey": appKey, "channel": channel, "isAuth": isAuth});
   }
 
   void setDebugMode(bool debug) {
@@ -39,36 +38,23 @@ class Janalytics {
   }
 
   void onCountEvent(String eventId, {Map<String, String>? extMap}) {
-    _channel
-        .invokeMethod("onCountEvent", {"eventId": eventId, "extMap": extMap});
+    _channel.invokeMethod("onCountEvent", {"eventId": eventId, "extMap": extMap});
   }
 
-  void onCalculateEvent(String eventId, double eventValue,
-      {Map<String, String>? extMap}) {
-    _channel.invokeMethod("onCalculateEvent",
-        {"eventId": eventId, "eventValue": eventValue, "extMap": extMap});
+  void onCalculateEvent(String eventId, double eventValue, {Map<String, String>? extMap}) {
+    _channel.invokeMethod("onCalculateEvent", {"eventId": eventId, "eventValue": eventValue, "extMap": extMap});
   }
 
-  void onLoginEvent(String loginMethod, bool loginSuccess,
-      {Map<String, String>? extMap}) {
-    _channel.invokeMethod("onLoginEvent", {
-      "loginMethod": loginMethod,
-      "loginSuccess": loginSuccess,
-      "extMap": extMap
-    });
+  void onLoginEvent(String loginMethod, bool loginSuccess, {Map<String, String>? extMap}) {
+    _channel.invokeMethod("onLoginEvent", {"loginMethod": loginMethod, "loginSuccess": loginSuccess, "extMap": extMap});
   }
 
-  void onRegisterEvent(String registerMethod, bool registerSuccess,
-      {Map<String, String>? extMap}) {
-    _channel.invokeMethod("onRegisterEvent", {
-      "registerMethod": registerMethod,
-      "registerSuccess": registerSuccess,
-      "extMap": extMap
-    });
+  void onRegisterEvent(String registerMethod, bool registerSuccess, {Map<String, String>? extMap}) {
+    _channel.invokeMethod(
+        "onRegisterEvent", {"registerMethod": registerMethod, "registerSuccess": registerSuccess, "extMap": extMap});
   }
 
-  void onBrowseEvent(
-      String browseId, String browseName, String browseType, int browseDuration,
+  void onBrowseEvent(String browseId, String browseName, String browseType, int browseDuration,
       {Map<String, String>? extMap}) {
     _channel.invokeMethod("onBrowseEvent", {
       "browseId": browseId,
@@ -80,14 +66,15 @@ class Janalytics {
   }
 
   void onPurchaseEvent(
-      String purchaseGoodsid,
-      String purchaseGoodsName,
-      double purchasePrice,
-      bool purchaseSuccess,
-      Currency purchaseCurrency,
-      String purchaseGoodsType,
-      int purchaseGoodsCount,
-      {Map<String, String>? extMap}) {
+    String purchaseGoodsid,
+    String purchaseGoodsName,
+    double purchasePrice,
+    bool purchaseSuccess,
+    Currency purchaseCurrency,
+    String purchaseGoodsType,
+    int purchaseGoodsCount, {
+    Map<String, String>? extMap,
+  }) {
     _channel.invokeMethod("onPurchaseEvent", {
       "purchaseGoodsid": purchaseGoodsid,
       "purchaseGoodsName": purchaseGoodsName,
@@ -116,8 +103,7 @@ class Janalytics {
       String? wechatID,
       String? qqID,
       Map<String, String>? extMap}) async {
-    final Map<dynamic, dynamic>? result =
-        await _channel.invokeMethod("identifyAccount", {
+    final Map<dynamic, dynamic>? result = await _channel.invokeMethod("identifyAccount", {
       "accountID": accountID,
       "creationTime": creationTime,
       "name": name,
@@ -135,8 +121,7 @@ class Janalytics {
   }
 
   Future<Map<dynamic, dynamic>?> detachAccount() async {
-    final Map<dynamic, dynamic>? result =
-        await _channel.invokeMethod("detachAccount");
+    final Map<dynamic, dynamic>? result = await _channel.invokeMethod("detachAccount");
     return result;
   }
 }

@@ -18,6 +18,7 @@ import cn.jiguang.analytics.android.api.LoginEvent;
 import cn.jiguang.analytics.android.api.PurchaseEvent;
 import cn.jiguang.analytics.android.api.RegisterEvent;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import cn.jiguang.api.utils.JCollectionAuth;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
@@ -87,6 +88,11 @@ public class JanalyticsPlugin implements FlutterPlugin, MethodCallHandler {
     }
 
     public void setup(MethodCall call, Result result) {
+        // 隐私合规处理
+        boolean isAuth = (boolean)call.argument("isAuth");
+        JCollectionAuth.setAuth(context,isAuth);
+
+
         JAnalyticsInterface.init(context);            // 初始化 JPush
         Object channelObj = call.argument("channel");
         if (channelObj != null) {
